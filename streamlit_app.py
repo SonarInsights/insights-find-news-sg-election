@@ -7,6 +7,12 @@ import pytz
 
 st.title("🗳️ SG Election News Tracker")
 
+# Subtext kecil di bawah judul
+st.markdown(
+    "<p style='font-size: 14px; color: gray;'>by <strong>Insights Sonar</strong> (for internal use only)<br>If you encounter any issues, please contact: <a href='mailto:katon.prasetyo@sonar.id'>katon.prasetyo@sonar.id</a></p>",
+    unsafe_allow_html=True
+)
+
 # Media Indonesia yang diperbolehkan
 allowed_sources = [
     "Jakarta Post", "Jakarta Globe", "Detik", "Liputan6", "CNN Indonesia", "TVOne", "Republika",
