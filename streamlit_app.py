@@ -18,13 +18,11 @@ allowed_sources = [
     "Jakarta Post", "Jakarta Globe", "Detik", "Liputan6", "CNN Indonesia", "TVOne", "Republika",
     "Kompas TV", "Sindo News", "Bisnis Indonesia", "Tempo", "Investor Daily", "Kompas", "Kontan",
     "MetroTV", "Antara", "Kumparan", "IDN Times", "BatamPos", "CNBC Indonesia", "Media Indonesia",
-    "Tirto.id", "VOI.id"
+    "Tirto", "VOI"
 ]
 
-# Dua set keyword Google News
-query_1 = '''("Singapura" OR "Singapore") AND ("bilateral" OR "kerjasama" OR "Pemilu" OR "Pemilihan Umum" OR "Election" OR "Parlemen" OR "Politics" OR "Political" OR "Pemungutan Suara" OR "Voting" OR "Vote" OR #SGGE OR #GE2025 OR #SingaporeElections OR #VoteSG OR #SGPolitics) AND ("Jokowi" OR "Joko Widodo" OR "Prabowo" OR "Indonesia" OR "Kabinet" OR "DPR" OR "Sugiono" OR "menlu")'''
-
-query_2 = '''("Singapura" OR "Singapore") AND ("Pemilu" OR "Pemilihan Umum" OR "Election" OR "Parlemen" OR "Partai" OR "Politics" OR "Political" OR "Pemungutan Suara" OR "Voting" OR "Vote" OR "People Action Party" OR "Partai Aksi Rakyat" OR "Workers Party" OR "Partai Buruh" OR "Progress Party" OR "Democratic Party" OR "Reform Party" OR "National Solidarity Party" OR "Partai Solidaritas Nasional" OR "Red Dot United" OR #PAP OR #WP OR #PSP OR #SDP) OR ("Lee Hsien Loong" OR "Tharman Shanmugaratnam" OR "Lawrence Wong" OR "Pritam Singh" OR "Jamus Lim" OR "Tan Cheng Bock" OR "Chee Soon Juan" OR "Sylvia Lim" OR #SGGE OR #GE2025 OR #SingaporeElections OR #VoteSG OR #SGPolitics")'''
+# Query tunggal Google News
+query = '''("Singapura" OR "Singapore") AND ("bilateral" OR "kerjasama" OR "Pemilu" OR "Pemilihan Umum" OR "Election" OR "Parlemen" OR "Politics" OR "Political" OR "Pemungutan Suara" OR "Voting" OR "Vote" OR #SGGE OR #GE2025 OR #SingaporeElections OR #VoteSG OR #SGPolitics OR "People Action Party" OR "Workers Party" OR "Progress Party" OR "Democratic Party" OR "Reform Party" OR "National Solidarity Party" OR "Red Dot United" OR "Lee Hsien Loong" OR "Tharman Shanmugaratnam" OR "Lawrence Wong" OR "Pritam Singh" OR "Jamus Lim" OR "Tan Cheng Bock" OR "Chee Soon Juan" OR "Sylvia Lim")'''
 
 def google_news_rss(query):
     encoded_query = urllib.parse.quote_plus(query)
@@ -51,10 +49,9 @@ def filter_24_hours(entries):
 # Tombol pencarian berita
 if st.button("Cari Berita SG Election Hari Ini", key="button_cari_berita"):
     with st.spinner("🔍 Mencari berita terbaru..."):
-        feed1 = google_news_rss(query_1)
-        feed2 = google_news_rss(query_2)
+        feed = google_news_rss(query)
 
-        all_entries = feed1.entries + feed2.entries
+        all_entries = feed.entries
         filtered_entries = filter_sources(all_entries)
         recent_entries = filter_24_hours(filtered_entries)
 
@@ -65,3 +62,4 @@ if st.button("Cari Berita SG Election Hari Ini", key="button_cari_berita"):
             st.caption(f"📰 {entry.source.title} | 🕒 {entry.published}")
     else:
         st.warning("Tidak ditemukan berita dari media yang disetujui dalam 24 jam terakhir.")
+
